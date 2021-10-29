@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &748788878402998849
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2243501274120281674, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3095462311981199496, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.02366968
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.023669686
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246736, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: sex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: life
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: energy
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: jumyou
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: kyuukaku
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: moveCost
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: matingAge
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: stillCost
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: viewRadius
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: matingJikan
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: impulseAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: viewKaizoudo
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: maleFishPrefab
+      value: 
+      objectReference: {fileID: 6604994604197646144, guid: 436315c610b5d6a449d1f5d7731d9d58, type: 3}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: highlightShuuki
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: matingRestJikan
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: femaleFishPrefab
+      value: 
+      objectReference: {fileID: 4219329589295852756}
+    - target: {fileID: 3524676304211246741, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: m_Name
+      value: femalefish Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+--- !u!1 &4219329589295852756 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3524676304211246741, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+  m_PrefabInstance: {fileID: 748788878402998849}
+  m_PrefabAsset: {fileID: 0}
