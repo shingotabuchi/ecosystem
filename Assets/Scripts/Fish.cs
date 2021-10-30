@@ -55,6 +55,7 @@ public class Fish : MonoBehaviour
     public float minimunLifeToEat;
     public float RelativeBenefitParameter;
     public float RelativeCostParameter;
+    public float debugEnergy,debugCost;
     public Sex sex;
     public enum Sex
     {
@@ -79,8 +80,6 @@ public class Fish : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        energy = 100f;
-        life = 100f;
         matingTimer = matingRestJikan;
         lifeDecreaseRate = life/jumyou;
         firstdirection = true;
@@ -186,7 +185,7 @@ public class Fish : MonoBehaviour
                     transform.Rotate(0,0,-rotateSpeed*Time.deltaTime);
                 }
                 if(Mathf.Abs(transform.rotation.eulerAngles.z)>85&&Mathf.Abs(transform.rotation.eulerAngles.z)<95){
-                    if(potentialBenefitOfMovement*RelativeBenefitCoefficient(energy)-moveCost*RelativeCostCoefficient(energy)>0){
+                    if(potentialBenefitOfMovement*(RelativeBenefitCoefficient(energy) + RelativeBenefitCoefficient(life))-moveCost*RelativeCostCoefficient(energy)>0){
                         state++;
                     }
                 }
@@ -350,7 +349,7 @@ public class Fish : MonoBehaviour
                 break;
         }
 
-        if(Mathf.Abs(transform.position.x)>ScreenHalfWidth-10*FishWidth||Mathf.Abs(transform.position.y)>ScreenHalfHeight-10*FishHeight){
+        if(Mathf.Abs(transform.position.x)>ScreenHalfWidth-5*FishWidth||Mathf.Abs(transform.position.y)>ScreenHalfHeight-5*FishHeight){
             transform.position = lastposition;
         }
         else lastposition = transform.position;
@@ -359,7 +358,7 @@ public class Fish : MonoBehaviour
         if(life<0||energy<0){
             Destroy(gameObject);
         }
-        if(energy>minimunEnergyToMate&&life<minimunLifeToEat){
+        if(energy>minimunEnergyToMate&&life<minimunLifeToEat&&sex==Sex.Male){
             critState = CriticalState.LifeCritical;
         }
         else if(energy<minimunEnergyToMate&&life>minimunLifeToEat){
@@ -436,7 +435,9 @@ public class Fish : MonoBehaviour
         return ( Mathf.Exp(-enrg*RelativeBenefitParameter) - Mathf.Exp(-100*RelativeBenefitParameter) ) / ( 1-Mathf.Exp(-100*RelativeBenefitParameter) );
     }
     float RelativeCostCoefficient(float enrg){
-        return ( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-100*RelativeCostParameter) ) / ( 1-Mathf.Exp(-100*RelativeCostParameter) );
+        if(( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-100*RelativeCostParameter) ) / ( 1-Mathf.Exp(-100*RelativeCostParameter) )>=0) return ( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-100*RelativeCostParameter) ) / ( 1-Mathf.Exp(-100*RelativeCostParameter) );
+        else return 0f;
+        
     }
 
     void OnTriggerEnter(Collider other){
@@ -455,7 +456,9 @@ public class Fish : MonoBehaviour
             float cost = (kyori/1.5f)* moveCost;
             if(critState == CriticalState.LifeCritical) return;
             
-            if(value*RelativeBenefitCoefficient(energy)-cost*RelativeCostCoefficient(energy)>=0){
+            if(value*RelativeBenefitCoefficient(energy)-cost*RelativeCostCoefficient(energy)>0){
+                debugEnergy = value*RelativeBenefitCoefficient(energy);
+                debugCost = cost*RelativeCostCoefficient(energy);
                 food = Food;
                 state = fishState.FoundFood;
                 foodPosition = food.transform.position;

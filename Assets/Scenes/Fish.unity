@@ -756,7 +756,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   food: {fileID: 7843169290807939437, guid: e9af74d158d3e1e49b11a22f1ceb9ccb, type: 3}
   foodSpawnAreaObj: {fileID: 2088366751}
-  SpawnTime: 10
+  SpawnTime: 1
 --- !u!4 &1413258761
 Transform:
   m_ObjectHideFlags: 0
@@ -1313,8 +1313,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088366751}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.0033898, y: -2.7157238, z: 15.590174}
-  m_LocalScale: {x: 17.56536, y: 2.306001, z: 1}
+  m_LocalPosition: {x: 1.9147, y: 0.888, z: 15.590174}
+  m_LocalScale: {x: 15.683104, y: 8.732726, z: 1}
   m_Children: []
   m_Father: {fileID: 1413258761}
   m_RootOrder: 0

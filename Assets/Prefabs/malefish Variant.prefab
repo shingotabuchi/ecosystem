@@ -89,7 +89,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: moveCost
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: matingAge
@@ -97,7 +97,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: stillCost
-      value: 0.01
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: viewRadius

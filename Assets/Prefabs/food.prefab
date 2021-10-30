@@ -110,5 +110,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KakusanJikan: 100
-  value: 1
+  value: 15
   kikaku: 1000

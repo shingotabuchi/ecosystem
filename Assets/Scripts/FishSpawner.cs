@@ -23,11 +23,11 @@ public class FishSpawner : MonoBehaviour
             newFishScript.kyuukaku = Random.Range(10f,50f);
             newFishScript.soshakuJikan = Random.Range(1f,15f);
             newFishScript.matingRestJikan = Random.Range(1f,15f);
-            newFishScript.matingAge = Random.Range(20f,100f);
+            newFishScript.matingAge = Random.Range(10f,50f);
             newFishScript.jumyou = Random.Range(100f,200f);
-            newFishScript.potentialBenefitOfMovement = Random.Range(0.5f,5f);
-            newFishScript.minimunEnergyToMate = Random.Range(0f,30f);
-            newFishScript.minimunLifeToEat = Random.Range(0f,30f);
+            newFishScript.potentialBenefitOfMovement = Random.Range(0.5f,10f);
+            newFishScript.minimunEnergyToMate = Random.Range(0f,50f);
+            newFishScript.minimunLifeToEat = Random.Range(0f,50f);
             newFishScript.RelativeBenefitParameter = Mathf.Pow(10,Random.Range(-2f,-1f));
             newFishScript.RelativeCostParameter = Mathf.Pow(10,Random.Range(-2f,-1f));
         }
@@ -41,11 +41,11 @@ public class FishSpawner : MonoBehaviour
             newFishScript.kyuukaku = Random.Range(10f,50f);
             newFishScript.soshakuJikan = Random.Range(1f,15f);
             newFishScript.matingRestJikan = Random.Range(1f,15f);
-            newFishScript.matingAge = Random.Range(20f,100f);
+            newFishScript.matingAge = Random.Range(10f,50f);
             newFishScript.jumyou = Random.Range(100f,200f);
-            newFishScript.potentialBenefitOfMovement = Random.Range(0.5f,5f);
-            newFishScript.minimunEnergyToMate = Random.Range(0f,30f);
-            newFishScript.minimunLifeToEat = Random.Range(0f,30f);
+            newFishScript.potentialBenefitOfMovement = Random.Range(0.5f,10f);
+            newFishScript.minimunEnergyToMate = Random.Range(0f,50f);
+            newFishScript.minimunLifeToEat = Random.Range(0f,50f);
             newFishScript.RelativeBenefitParameter = Mathf.Pow(10,Random.Range(-2f,-1f));
             newFishScript.RelativeCostParameter = Mathf.Pow(10,Random.Range(-2f,-1f));
         }
