@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Fish : MonoBehaviour
 {
     ////諸事情で必要なやつ
@@ -57,6 +58,12 @@ public class Fish : MonoBehaviour
     public float RelativeCostParameter;
     public float debugEnergy,debugCost;
     public Sex sex;
+
+    ////csvに記録するためのデータ
+    public static int FishCount,FishCountMale,FishCountFemale;
+    public static float meanViewRadius,meanImpulseTime,meanKyuukaku,meanSoshakuJikan,
+    meanMatingRestJikan,meanMatingAge,meanJumyo,meanPotentialBenefitOfMovement,
+    meanMinimumEnergyToMate,meanMinimumLifeToEat,meanRelativeBenefitParameter,meanRelativeCostParameter;
     public enum Sex
     {
         Male = 0,
@@ -80,6 +87,7 @@ public class Fish : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateDataOnBirth();
         matingTimer = matingRestJikan;
         lifeDecreaseRate = life/jumyou;
         firstdirection = true;
@@ -162,9 +170,7 @@ public class Fish : MonoBehaviour
                 if(Physics.Raycast(transform.position,RotateZ(fugo*forward,-i*60f/(float)viewKaizoudo),out hit,viewRadius,1 << LayerMask.NameToLayer("Fish"))){
                     Fish fishScript = hit.transform.gameObject.GetComponent<Fish>();
                     if(fishScript.sex==Sex.Female&&sex==Sex.Male){
-                        print("hi");
                         if(fishScript.PleaseMate(gameObject)){
-                            print("yo");
                             state = fishState.FoundMate;
                             mate = hit.transform.gameObject;
                             gameObject.layer = LayerMask.NameToLayer("FoundMateFish");
@@ -356,6 +362,7 @@ public class Fish : MonoBehaviour
 
         life -= lifeDecreaseRate*Time.deltaTime;
         if(life<0||energy<0){
+            UpdateDataOnDeath();
             Destroy(gameObject);
         }
         if(energy>minimunEnergyToMate&&life<minimunLifeToEat&&sex==Sex.Male){
@@ -365,6 +372,40 @@ public class Fish : MonoBehaviour
             critState = CriticalState.EnergyCritical;
         }
         else critState = CriticalState.None;
+    }
+    void UpdateDataOnDeath(){
+        Fish.meanViewRadius = (Fish.meanViewRadius * Fish.FishCount - viewRadius)/(Fish.FishCount-1);
+        Fish.meanImpulseTime = (Fish.meanImpulseTime * Fish.FishCount - impulseTime)/(Fish.FishCount-1);
+        Fish.meanKyuukaku = (Fish.meanKyuukaku * Fish.FishCount - kyuukaku)/(Fish.FishCount-1);
+        Fish.meanSoshakuJikan = (Fish.meanSoshakuJikan * Fish.FishCount - soshakuJikan)/(Fish.FishCount-1);
+        Fish.meanMatingRestJikan = (Fish.meanMatingRestJikan * Fish.FishCount - matingRestJikan)/(Fish.FishCount-1);
+        Fish.meanMatingAge = (Fish.meanMatingAge * Fish.FishCount - matingAge)/(Fish.FishCount-1);
+        Fish.meanJumyo = (Fish.meanJumyo * Fish.FishCount - jumyou)/(Fish.FishCount-1);
+        Fish.meanPotentialBenefitOfMovement = (Fish.meanPotentialBenefitOfMovement * Fish.FishCount - potentialBenefitOfMovement)/(Fish.FishCount-1);
+        Fish.meanMinimumEnergyToMate = (Fish.meanMinimumEnergyToMate * Fish.FishCount - minimunEnergyToMate)/(Fish.FishCount-1);
+        Fish.meanMinimumLifeToEat = (Fish.meanMinimumLifeToEat * Fish.FishCount - minimunLifeToEat)/(Fish.FishCount-1);
+        Fish.meanRelativeBenefitParameter = (Fish.meanRelativeBenefitParameter * Fish.FishCount - RelativeBenefitParameter)/(Fish.FishCount-1);
+        Fish.meanRelativeCostParameter = (Fish.meanRelativeCostParameter * Fish.FishCount - RelativeCostParameter)/(Fish.FishCount-1);
+        Fish.FishCount--;
+        if(sex==Sex.Male) Fish.FishCountMale--;
+        else Fish.FishCountFemale--;
+    }
+    void UpdateDataOnBirth(){
+        Fish.meanViewRadius = (Fish.meanViewRadius * Fish.FishCount + viewRadius)/(Fish.FishCount+1);
+        Fish.meanImpulseTime = (Fish.meanImpulseTime * Fish.FishCount + impulseTime)/(Fish.FishCount+1);
+        Fish.meanKyuukaku = (Fish.meanKyuukaku * Fish.FishCount + kyuukaku)/(Fish.FishCount+1);
+        Fish.meanSoshakuJikan = (Fish.meanSoshakuJikan * Fish.FishCount + soshakuJikan)/(Fish.FishCount+1);
+        Fish.meanMatingRestJikan = (Fish.meanMatingRestJikan * Fish.FishCount + matingRestJikan)/(Fish.FishCount+1);
+        Fish.meanMatingAge = (Fish.meanMatingAge * Fish.FishCount + matingAge)/(Fish.FishCount+1);
+        Fish.meanJumyo = (Fish.meanJumyo * Fish.FishCount + jumyou)/(Fish.FishCount+1);
+        Fish.meanPotentialBenefitOfMovement = (Fish.meanPotentialBenefitOfMovement * Fish.FishCount + potentialBenefitOfMovement)/(Fish.FishCount+1);
+        Fish.meanMinimumEnergyToMate = (Fish.meanMinimumEnergyToMate * Fish.FishCount + minimunEnergyToMate)/(Fish.FishCount+1);
+        Fish.meanMinimumLifeToEat = (Fish.meanMinimumLifeToEat * Fish.FishCount + minimunLifeToEat)/(Fish.FishCount+1);
+        Fish.meanRelativeBenefitParameter = (Fish.meanRelativeBenefitParameter * Fish.FishCount + RelativeBenefitParameter)/(Fish.FishCount+1);
+        Fish.meanRelativeCostParameter = (Fish.meanRelativeCostParameter * Fish.FishCount + RelativeCostParameter)/(Fish.FishCount+1);
+        Fish.FishCount++;
+        if(sex==Sex.Male) Fish.FishCountMale++;
+        else Fish.FishCountFemale++;
     }
     void PassDownGenes(GameObject baby, GameObject mom, GameObject dad){
         Fish babyScript,momScript,dadScript;
@@ -386,7 +427,7 @@ public class Fish : MonoBehaviour
         if(rng==0) babyScript.kyuukaku = momScript.kyuukaku + Random.Range(-2f,2f);
         else babyScript.kyuukaku = dadScript.kyuukaku + Random.Range(-2f,2f);
         if(babyScript.kyuukaku<0)babyScript.kyuukaku = 0;
-        
+
         rng = Random.Range(0,2);
         if(rng==0) babyScript.soshakuJikan = momScript.soshakuJikan + Random.Range(-1f,1f);
         else babyScript.soshakuJikan = dadScript.soshakuJikan + Random.Range(-1f,1f);
