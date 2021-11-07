@@ -68,6 +68,10 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: Map
+      value: 
+      objectReference: {fileID: 9101994205820737796, guid: 602e19d22b689ac49b0e2a8c4ed8d448, type: 3}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: life
       value: 100
       objectReference: {fileID: 0}
@@ -97,7 +101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: stillCost
-      value: 0.03
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: viewRadius
@@ -106,6 +110,10 @@ PrefabInstance:
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: matingJikan
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
+      propertyPath: valueAsFood
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: viewKaizoudo

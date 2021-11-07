@@ -13,12 +13,13 @@ public class KeyFrame
     public int Count,CountMale,CountFemale;
     public float ViewRadius,ImpulseTime,Kyuukaku,SoshakuJikan,
     MatingRestJikan,MatingAge,Jumyo,PotentialBenefitOfMovement,
-    MinimumEnergyToMate,MinimumLifeToEat,RelativeBenefitParameter,RelativeCostParameter;
+    MinimumEnergyToMate,MinimumLifeToEat,RelativeBenefitParameter,RelativeCostParameter,
+    MinimumDistanceFromPredator;
     public KeyFrame(){}
 
     public KeyFrame (float time, int count, int countMale, int countFemale, float viewRadius, float impulseTime,
     float kyuukaku, float soshakuJikan, float matingRestJikan, float matingAge, float jumyo, float potentialBenefitOfMovement,
-    float minimumEnergyToMate, float minimumLifeToEat, float relativeBenefitParameter, float relativeCostParameter)
+    float minimumEnergyToMate, float minimumLifeToEat, float relativeBenefitParameter, float relativeCostParameter, float minimumDistanceFromPredator)
     {
         Time = time;
         Count = count;
@@ -36,17 +37,51 @@ public class KeyFrame
         MinimumLifeToEat = minimumLifeToEat;
         RelativeBenefitParameter = relativeBenefitParameter;
         RelativeCostParameter = relativeCostParameter;
+        MinimumDistanceFromPredator = minimumDistanceFromPredator;
+    }
+}
+public class KeyFramePredator
+{
+    public float Time;
+    public int Count,CountMale,CountFemale;
+    public float ViewRadius,ImpulseTime,SoshakuJikan,
+    MatingRestJikan,MatingAge,Jumyo,PotentialBenefitOfMovement,
+    MinimumEnergyToMate,MinimumLifeToEat,RelativeBenefitParameter,RelativeCostParameter;
+    public KeyFramePredator(){}
+
+    public KeyFramePredator (float time, int count, int countMale, int countFemale, float viewRadius, float impulseTime, 
+    float soshakuJikan, float matingRestJikan, float matingAge, float jumyo, float potentialBenefitOfMovement,
+    float minimumEnergyToMate, float minimumLifeToEat, float relativeBenefitParameter, float relativeCostParameter)
+    {
+        Time = time;
+        Count = count;
+        CountMale = countMale;
+        CountFemale = countFemale;
+        ViewRadius = viewRadius;
+        ImpulseTime = impulseTime;
+        SoshakuJikan = soshakuJikan;
+        MatingRestJikan = matingRestJikan;
+        MatingAge = matingAge;
+        Jumyo = jumyo;
+        PotentialBenefitOfMovement = potentialBenefitOfMovement;
+        MinimumEnergyToMate = minimumEnergyToMate;
+        MinimumLifeToEat = minimumLifeToEat;
+        RelativeBenefitParameter = relativeBenefitParameter;
+        RelativeCostParameter = relativeCostParameter;
     }
 }
 public class SaveToCsv : MonoBehaviour
 {
     float timer = 0;
     private List<KeyFrame> keyFrames = new List<KeyFrame>(60000);
+    private List<KeyFramePredator> keyFramesPredator = new List<KeyFramePredator>(60000);
     // Start is called before the first frame update
     void Start()
     {
         keyFrames.Add(new KeyFrame (Time.time, Fish.FishCount, Fish.FishCountMale, Fish.FishCountFemale,Fish.meanViewRadius,Fish.meanImpulseTime,Fish.meanKyuukaku,Fish.meanSoshakuJikan,Fish.meanMatingRestJikan,Fish.meanMatingAge,Fish.meanJumyo,Fish.meanPotentialBenefitOfMovement,
-        Fish.meanMinimumEnergyToMate,Fish.meanMinimumLifeToEat,Fish.meanRelativeBenefitParameter,Fish.meanRelativeCostParameter));
+        Fish.meanMinimumEnergyToMate,Fish.meanMinimumLifeToEat,Fish.meanRelativeBenefitParameter,Fish.meanRelativeCostParameter,Fish.meanMinimumDistanceFromPredator));
+        keyFramesPredator.Add(new KeyFramePredator (Time.time, Predator.FishCount, Predator.FishCountMale, Predator.FishCountFemale,Predator.meanViewRadius,Predator.meanImpulseTime,Predator.meanSoshakuJikan,Predator.meanMatingRestJikan,Predator.meanMatingAge,Predator.meanJumyo,Predator.meanPotentialBenefitOfMovement,
+        Predator.meanMinimumEnergyToMate,Predator.meanMinimumLifeToEat,Predator.meanRelativeBenefitParameter,Predator.meanRelativeCostParameter));
     }
 
     // Update is called once per frame
@@ -54,14 +89,17 @@ public class SaveToCsv : MonoBehaviour
     {
         if(timer>1){
             keyFrames.Add(new KeyFrame (Time.time, Fish.FishCount, Fish.FishCountMale, Fish.FishCountFemale,Fish.meanViewRadius,Fish.meanImpulseTime,Fish.meanKyuukaku,Fish.meanSoshakuJikan,Fish.meanMatingRestJikan,Fish.meanMatingAge,Fish.meanJumyo,Fish.meanPotentialBenefitOfMovement,
-            Fish.meanMinimumEnergyToMate,Fish.meanMinimumLifeToEat,Fish.meanRelativeBenefitParameter,Fish.meanRelativeCostParameter));
+            Fish.meanMinimumEnergyToMate,Fish.meanMinimumLifeToEat,Fish.meanRelativeBenefitParameter,Fish.meanRelativeCostParameter,Fish.meanMinimumDistanceFromPredator));
+            keyFramesPredator.Add(new KeyFramePredator (Time.time, Predator.FishCount, Predator.FishCountMale, Predator.FishCountFemale,Predator.meanViewRadius,Predator.meanImpulseTime,Predator.meanSoshakuJikan,Predator.meanMatingRestJikan,Predator.meanMatingAge,Predator.meanJumyo,Predator.meanPotentialBenefitOfMovement,
+        Predator.meanMinimumEnergyToMate,Predator.meanMinimumLifeToEat,Predator.meanRelativeBenefitParameter,Predator.meanRelativeCostParameter));
             timer = 0;
         }
         timer += Time.deltaTime;
     }
     public string ToCSV()
     {
-        var sb = new StringBuilder("Time.time,Fish.FishCount,Fish.FishCountMale,Fish.FishCountFemale,Fish.meanViewRadius,Fish.meanImpulseTime,Fish.meanKyuukaku,Fish.meanSoshakuJikan,Fish.meanMatingRestJikan,Fish.meanMatingAge,Fish.meanJumyo,Fish.meanPotentialBenefitOfMovement,Fish.meanMinimumEnergyToMate,Fish.meanMinimumLifeToEat,Fish.meanRelativeBenefitParameter,Fish.meanRelativeCostParameter");
+        var sb = new StringBuilder("Time.time,Fish.FishCount,Fish.FishCountMale,Fish.FishCountFemale,Fish.meanViewRadius,Fish.meanImpulseTime,Fish.meanKyuukaku,Fish.meanSoshakuJikan,Fish.meanMatingRestJikan,Fish.meanMatingAge,Fish.meanJumyo,Fish.meanPotentialBenefitOfMovement,Fish.meanMinimumEnergyToMate,Fish.meanMinimumLifeToEat,Fish.meanRelativeBenefitParameter,Fish.meanRelativeCostParameter,Fish.meanMinimumDistanceFromPredator,Predator.FishCount, Predator.FishCountMale, Predator.FishCountFemale,Predator.meanViewRadius,Predator.meanImpulseTime,Predator.meanSoshakuJikan,Predator.meanMatingRestJikan,Predator.meanMatingAge,Predator.meanJumyo,Predator.meanPotentialBenefitOfMovement,Predator.meanMinimumEnergyToMate,Predator.meanMinimumLifeToEat,Predator.meanRelativeBenefitParameter,Predator.meanRelativeCostParameter");
+        int i = 0;
         foreach(var frame in keyFrames)
         {
             sb.Append('\n').Append(frame.Time.ToString())
@@ -69,7 +107,14 @@ public class SaveToCsv : MonoBehaviour
             .Append(',').Append(frame.ViewRadius.ToString()).Append(',').Append(frame.ImpulseTime.ToString()).Append(',').Append(frame.Kyuukaku.ToString())
             .Append(',').Append(frame.SoshakuJikan.ToString()).Append(',').Append(frame.MatingRestJikan.ToString()).Append(',').Append(frame.MatingAge.ToString())
             .Append(',').Append(frame.Jumyo.ToString()).Append(',').Append(frame.PotentialBenefitOfMovement.ToString()).Append(',').Append(frame.MinimumEnergyToMate.ToString())
-            .Append(',').Append(frame.MinimumLifeToEat.ToString()).Append(',').Append(frame.RelativeBenefitParameter.ToString()).Append(',').Append(frame.RelativeCostParameter.ToString());
+            .Append(',').Append(frame.MinimumLifeToEat.ToString()).Append(',').Append(frame.RelativeBenefitParameter.ToString()).Append(',').Append(frame.RelativeCostParameter.ToString())
+            .Append(',').Append(frame.MinimumDistanceFromPredator.ToString())
+            .Append(',').Append(keyFramesPredator[i].Count.ToString()).Append(',').Append(keyFramesPredator[i].CountMale.ToString()).Append(',').Append(keyFramesPredator[i].CountFemale.ToString())
+            .Append(',').Append(keyFramesPredator[i].ViewRadius.ToString()).Append(',').Append(keyFramesPredator[i].ImpulseTime.ToString())
+            .Append(',').Append(keyFramesPredator[i].SoshakuJikan.ToString()).Append(',').Append(keyFramesPredator[i].MatingRestJikan.ToString()).Append(',').Append(keyFramesPredator[i].MatingAge.ToString())
+            .Append(',').Append(keyFramesPredator[i].Jumyo.ToString()).Append(',').Append(keyFramesPredator[i].PotentialBenefitOfMovement.ToString()).Append(',').Append(keyFramesPredator[i].MinimumEnergyToMate.ToString())
+            .Append(',').Append(keyFramesPredator[i].MinimumLifeToEat.ToString()).Append(',').Append(keyFramesPredator[i].RelativeBenefitParameter.ToString()).Append(',').Append(keyFramesPredator[i].RelativeCostParameter.ToString());
+            i++;
         }
 
         return sb.ToString();

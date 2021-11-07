@@ -34,5 +34,8 @@ public class Food : MonoBehaviour
             fishScript.SenseFood(gameObject, scent, value);
         }
         time += Time.deltaTime;
+        if(time > 2*KakusanJikan){
+            Destroy(gameObject);
+        }
     }
 }

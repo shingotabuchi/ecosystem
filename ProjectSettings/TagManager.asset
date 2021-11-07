@@ -15,10 +15,10 @@ TagManager:
   - Food
   - FoundFoodFish
   - FoundMateFish
-  - 
-  - 
-  - 
-  - 
+  - Predator
+  - FoundFoodPredator
+  - FoundMatePredator
+  - RunningAwayFish
   - 
   - 
   - 

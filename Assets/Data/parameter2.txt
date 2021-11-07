@@ -1,0 +1,90 @@
+Initial Values
+Food
+Value: 15
+Kakusan Jikan: 100
+Kikaku: 1000
+Spawn Time: 0.5
+
+Common
+Fish To Spawn: 15
+Energy: 50
+Life: 100
+View Kaizoudo: 20
+Impulse Angle: 30
+Impulse Force: 3
+Rotate Speed: 40
+Move Cost: 1
+Still Cost: 0.03
+Mating Jikan: 5
+
+Others
+newFishScript.viewRadius = Random.Range(2f,4f);
+newFishScript.impulseTime = Random.Range(1f,15f);
+newFishScript.kyuukaku = Random.Range(10f,50f);
+newFishScript.soshakuJikan = Random.Range(1f,15f);
+newFishScript.matingRestJikan = Random.Range(1f,15f);
+newFishScript.matingAge = Random.Range(10f,50f);
+newFishScript.jumyou = Random.Range(100f,200f);
+newFishScript.potentialBenefitOfMovement = Random.Range(0.5f,8f);
+newFishScript.minimunEnergyToMate = Random.Range(0f,40f);
+newFishScript.minimunLifeToEat = Random.Range(0f,50f);
+newFishScript.RelativeBenefitParameter = Mathf.Pow(10,Random.Range(-2f,-1f));
+newFishScript.RelativeCostParameter = Mathf.Pow(10,Random.Range(-2f,-1f));
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.viewRadius = momScript.viewRadius + Random.Range(-0.5f,0.5f);
+else babyScript.viewRadius = dadScript.viewRadius + Random.Range(-0.5f,0.5f);
+if(babyScript.viewRadius<0)babyScript.viewRadius = 0;
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.impulseTime = momScript.impulseTime + Random.Range(-1f,1f);
+else babyScript.impulseTime = dadScript.impulseTime + Random.Range(-1f,1f);
+if(babyScript.impulseTime<0)babyScript.impulseTime = 0;
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.kyuukaku = momScript.kyuukaku + Random.Range(-2f,2f);
+else babyScript.kyuukaku = dadScript.kyuukaku + Random.Range(-2f,2f);
+if(babyScript.kyuukaku<0)babyScript.kyuukaku = 0;
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.soshakuJikan = momScript.soshakuJikan + Random.Range(-1f,1f);
+else babyScript.soshakuJikan = dadScript.soshakuJikan + Random.Range(-1f,1f);
+if(babyScript.soshakuJikan<0)babyScript.soshakuJikan = 0;
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.matingRestJikan = momScript.matingRestJikan + Random.Range(-1f,1f);
+else babyScript.matingRestJikan = dadScript.matingRestJikan + Random.Range(-1f,1f);
+if(babyScript.matingRestJikan<0)babyScript.matingRestJikan = 0;
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.matingAge = momScript.matingAge + Random.Range(-5f,5f);
+else babyScript.matingAge = dadScript.matingAge + Random.Range(-5f,5f);
+if(babyScript.matingAge<0)babyScript.matingAge = 0;
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.jumyou = momScript.jumyou + Random.Range(-10f,10f);
+else babyScript.jumyou = dadScript.jumyou + Random.Range(-10f,10f);
+if(babyScript.jumyou<0)babyScript.jumyou = 0;
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.potentialBenefitOfMovement = momScript.potentialBenefitOfMovement + Random.Range(-0.5f,0.5f);
+else babyScript.potentialBenefitOfMovement = dadScript.potentialBenefitOfMovement + Random.Range(-0.5f,0.5f);
+if(babyScript.potentialBenefitOfMovement<0)babyScript.potentialBenefitOfMovement = 0;
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.minimunEnergyToMate = momScript.minimunEnergyToMate + Random.Range(-3f,3f);
+else babyScript.minimunEnergyToMate = dadScript.minimunEnergyToMate + Random.Range(-3f,3f);
+if(babyScript.minimunEnergyToMate<0)babyScript.minimunEnergyToMate = 0;
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.minimunLifeToEat = momScript.minimunLifeToEat + Random.Range(-3f,3f);
+else babyScript.minimunLifeToEat = dadScript.minimunLifeToEat + Random.Range(-3f,3f);
+if(babyScript.minimunLifeToEat<0)babyScript.minimunLifeToEat = 0;
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.RelativeBenefitParameter = Mathf.Pow(10,Mathf.Log10(momScript.RelativeBenefitParameter) + Random.Range(-0.1f,0.1f));
+else babyScript.RelativeBenefitParameter = Mathf.Pow(10,Mathf.Log10(dadScript.RelativeBenefitParameter) + Random.Range(-0.1f,0.1f));
+
+rng = Random.Range(0,2);
+if(rng==0) babyScript.RelativeCostParameter =  Mathf.Pow(10,Mathf.Log10(momScript.RelativeCostParameter) + Random.Range(-0.1f,0.1f));
+else babyScript.RelativeCostParameter = Mathf.Pow(10,Mathf.Log10(dadScript.RelativeCostParameter) + Random.Range(-0.1f,0.1f));
