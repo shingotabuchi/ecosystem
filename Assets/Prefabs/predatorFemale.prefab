@@ -112,7 +112,7 @@ MonoBehaviour:
   impulseForce: 3
   rotateSpeed: 40
   moveCost: 1
-  stillCost: 0.01
+  stillCost: 0.02
   matingJikan: 5
   eatRange: 0.8
   oneStepMoveRange: 1.5
@@ -130,6 +130,10 @@ MonoBehaviour:
   debugEnergy: 0
   debugCost: 0
   sex: 1
+  EnergyToGiveBirth: 0
+  NumberOfChildren: 0
+  MaxEnergy: 0
+  InitialEnergy: 0
 --- !u!65 &-6622399537961962832
 BoxCollider:
   m_ObjectHideFlags: 0

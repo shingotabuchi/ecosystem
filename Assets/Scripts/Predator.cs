@@ -60,6 +60,10 @@ public class Predator : MonoBehaviour
     public float RelativeCostParameter;
     public float debugEnergy,debugCost;
     public Sex sex;
+    public float EnergyToGiveBirth;
+    public int NumberOfChildren;
+    public float MaxEnergy;
+    public float InitialEnergy;
 
     ////csvに記録するためのデータ
     public static int FishCount,FishCountMale,FishCountFemale;
@@ -89,7 +93,7 @@ public class Predator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        energy = 50;
+        energy = InitialEnergy;
         life = 100;
         UpdateDataOnBirth();
         matingTimer = matingRestJikan;
@@ -331,13 +335,19 @@ public class Predator : MonoBehaviour
                 }
                 if(timer > matingJikan){
                     if(sex == Sex.Female){
-                        int sexRng = Random.Range(0,2);
-                        GameObject newFish;
-                        if(sexRng==0)newFish = Instantiate(maleFishPrefab,transform.position,Quaternion.Euler(0,0,90));
-                        else newFish = Instantiate(femaleFishPrefab,transform.position,Quaternion.Euler(0,0,90));
-                        PassDownGenes(newFish,gameObject,mate);
-                        newFish.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
-                        newFish.layer = LayerMask.NameToLayer("Predator");
+                        for (int i = 0; i < NumberOfChildren; i++)
+                        {
+                            int sexRng = Random.Range(0,2);
+                            GameObject newFish;
+                            if(sexRng==0)newFish = Instantiate(maleFishPrefab,transform.position,Quaternion.Euler(0,0,90));
+                            else newFish = Instantiate(femaleFishPrefab,transform.position,Quaternion.Euler(0,0,90));
+                            PassDownGenes(newFish,gameObject,mate);
+                            newFish.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
+                            newFish.layer = LayerMask.NameToLayer("Predator");
+                            Predator newFishScript = newFish.GetComponent<Predator>();
+                            newFishScript.InitialEnergy = EnergyToGiveBirth/NumberOfChildren;
+                        }
+                        energy -= EnergyToGiveBirth;
                     }
                     gameObject.layer = LayerMask.NameToLayer("Predator");
                     matingTimer = 0;
@@ -461,8 +471,8 @@ public class Predator : MonoBehaviour
         if(babyScript.viewRadius<0)babyScript.viewRadius = 0;
 
         rng = Random.Range(0,2);
-        if(rng==0) babyScript.impulseTime = momScript.impulseTime + Random.Range(-0.5f,0.5f);
-        else babyScript.impulseTime = dadScript.impulseTime + Random.Range(-0.5f,0.5f);
+        if(rng==0) babyScript.impulseTime = momScript.impulseTime + Random.Range(-0.1f,0.1f);
+        else babyScript.impulseTime = dadScript.impulseTime + Random.Range(-0.1f,0.1f);
         if(babyScript.impulseTime<0)babyScript.impulseTime = 0;
 
         rng = Random.Range(0,2);
@@ -507,19 +517,34 @@ public class Predator : MonoBehaviour
         rng = Random.Range(0,2);
         if(rng==0) babyScript.RelativeCostParameter =  Mathf.Pow(10,Mathf.Log10(momScript.RelativeCostParameter) + Random.Range(-0.1f,0.1f));
         else babyScript.RelativeCostParameter = Mathf.Pow(10,Mathf.Log10(dadScript.RelativeCostParameter) + Random.Range(-0.1f,0.1f));
+
+        rng = Random.Range(0,2);
+        if(rng==0) babyScript.EnergyToGiveBirth = momScript.EnergyToGiveBirth + Random.Range(-5f,5f);
+        else babyScript.EnergyToGiveBirth = dadScript.EnergyToGiveBirth + Random.Range(-5f,5f);
+        if(babyScript.EnergyToGiveBirth<0)babyScript.EnergyToGiveBirth = 0;
+        
+        rng = Random.Range(0,2);
+        if(rng==0) babyScript.NumberOfChildren = momScript.NumberOfChildren + (1 - 2*Random.Range(0,2))*Random.Range(0,11)/10;
+        else babyScript.NumberOfChildren = dadScript.NumberOfChildren + (1 - 2*Random.Range(0,2))*Random.Range(0,11)/10;
+        if(babyScript.NumberOfChildren<1)babyScript.NumberOfChildren = 1;
+
+        rng = Random.Range(0,2);
+        if(rng==0) babyScript.MaxEnergy = momScript.MaxEnergy + Random.Range(-5f,5f);
+        else babyScript.MaxEnergy = dadScript.MaxEnergy + Random.Range(-5f,5f);
+        if(babyScript.MaxEnergy<babyScript.minimunEnergyToMate)babyScript.MaxEnergy = babyScript.minimunEnergyToMate;
     }
     float RelativeBenefitCoefficient(float enrg){
-        return ( Mathf.Exp(-enrg*RelativeBenefitParameter) - Mathf.Exp(-100*RelativeBenefitParameter) ) / ( 1-Mathf.Exp(-100*RelativeBenefitParameter) );
+        return ( Mathf.Exp(-enrg*RelativeBenefitParameter) - Mathf.Exp(-MaxEnergy*RelativeBenefitParameter) ) / ( 1-Mathf.Exp(-MaxEnergy*RelativeBenefitParameter) );
     }
     float RelativeCostCoefficient(float enrg){
-        if(( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-100*RelativeCostParameter) ) / ( 1-Mathf.Exp(-100*RelativeCostParameter) )>=0) return ( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-100*RelativeCostParameter) ) / ( 1-Mathf.Exp(-100*RelativeCostParameter) );
+        if(( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-MaxEnergy*RelativeCostParameter) ) / ( 1-Mathf.Exp(-MaxEnergy*RelativeCostParameter) )>=0) return ( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-MaxEnergy*RelativeCostParameter) ) / ( 1-Mathf.Exp(-MaxEnergy*RelativeCostParameter) );
         else return 0f;
         
     }
     public bool PleaseMate(GameObject male){
         Predator maleScript = male.GetComponent<Predator>();
         float age = (100f-life)/lifeDecreaseRate;
-        if(age>=matingAge&&matingTimer>=matingRestJikan&&gameObject.layer == LayerMask.NameToLayer("Predator")&&critState!=CriticalState.EnergyCritical){
+        if(age>=matingAge&&matingTimer>=matingRestJikan&&gameObject.layer == LayerMask.NameToLayer("Predator")&&critState!=CriticalState.EnergyCritical&&energy>EnergyToGiveBirth + minimunEnergyToMate){
             gameObject.layer =  LayerMask.NameToLayer("FoundMatePredator");
             mate = male;
             state = fishState.FoundMate;

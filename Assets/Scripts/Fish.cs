@@ -34,6 +34,7 @@ public class Fish : MonoBehaviour
     public float energy;
     public float life;
     float matingTimer;
+    float runningTimer;
 
     ////さかなの挙動用の定数（共通）    
     public int viewKaizoudo;
@@ -61,6 +62,10 @@ public class Fish : MonoBehaviour
     public float minimumDistanceFromPredator;
     public float debugEnergy,debugCost;
     public Sex sex;
+    public float EnergyToGiveBirth;
+    public int NumberOfChildren;
+    public float MaxEnergy;
+    public float InitialEnergy;
 
     ////csvに記録するためのデータ
     public static int FishCount,FishCountMale,FishCountFemale;
@@ -92,10 +97,11 @@ public class Fish : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        energy = 50;
+        energy = InitialEnergy;
         life = 100;
         UpdateDataOnBirth();
         matingTimer = matingRestJikan;
+        runningTimer = 0f;
         lifeDecreaseRate = life/jumyou;
         firstdirection = true;
         scale = transform.localScale;
@@ -259,15 +265,17 @@ public class Fish : MonoBehaviour
                 else{
                     transform.Rotate(0,0,muki);
                 }
-                powerDirection = RotateZ(forward,muki);
+                powerDirection = direcToFood.normalized;
+                // powerDirection = RotateZ(forward,muki);
                 rng = Random.Range(0f,1f);
                 if(rng<=Mathf.Exp(-impulseTime/timer)){
-                    if(firstdirection){
-                        fishBody.AddForce(powerDirection*impulseForce,ForceMode.Impulse);
-                    }
-                    else{
-                        fishBody.AddForce(-powerDirection*impulseForce,ForceMode.Impulse);
-                    }
+                    fishBody.AddForce(powerDirection*impulseForce,ForceMode.Impulse);
+                    // if(firstdirection){
+                    //     fishBody.AddForce(powerDirection*impulseForce,ForceMode.Impulse);
+                    // }
+                    // else{
+                    //     fishBody.AddForce(-powerDirection*impulseForce,ForceMode.Impulse);
+                    // }
                     timer = 0;
                     energy -= moveCost;
                 }
@@ -314,15 +322,17 @@ public class Fish : MonoBehaviour
                 }
                 
                 transform.Rotate(0,0,muki);
-                powerDirection = RotateZ(forward,muki);
+                powerDirection = direcToMate.normalized;
+                // powerDirection = RotateZ(forward,muki);
                 rng = Random.Range(0f,1f);
                 if(rng<=Mathf.Exp(-impulseTime/timer)){
-                    if(firstdirection){
-                        fishBody.AddForce(powerDirection*impulseForce,ForceMode.Impulse);
-                    }
-                    else{
-                        fishBody.AddForce(-powerDirection*impulseForce,ForceMode.Impulse);
-                    }
+                    fishBody.AddForce(powerDirection*impulseForce,ForceMode.Impulse);
+                    // if(firstdirection){
+                    //     fishBody.AddForce(powerDirection*impulseForce,ForceMode.Impulse);
+                    // }
+                    // else{
+                    //     fishBody.AddForce(-powerDirection*impulseForce,ForceMode.Impulse);
+                    // }
                     timer = 0;
                     energy -= moveCost;
                 }
@@ -342,13 +352,19 @@ public class Fish : MonoBehaviour
                 }
                 if(timer > matingJikan){
                     if(sex == Sex.Female){
-                        int sexRng = Random.Range(0,2);
-                        GameObject newFish;
-                        if(sexRng==0)newFish = Instantiate(maleFishPrefab,transform.position,Quaternion.Euler(0,0,90));
-                        else newFish = Instantiate(femaleFishPrefab,transform.position,Quaternion.Euler(0,0,90));
-                        PassDownGenes(newFish,gameObject,mate);
-                        newFish.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
-                        newFish.layer = LayerMask.NameToLayer("Fish");
+                        for (int i = 0; i < NumberOfChildren; i++)
+                        {
+                            int sexRng = Random.Range(0,2);
+                            GameObject newFish;
+                            if(sexRng==0)newFish = Instantiate(maleFishPrefab,transform.position,Quaternion.Euler(0,0,90));
+                            else newFish = Instantiate(femaleFishPrefab,transform.position,Quaternion.Euler(0,0,90));
+                            PassDownGenes(newFish,gameObject,mate);
+                            newFish.transform.localScale = new Vector3(scale.x, scale.y, scale.z);
+                            newFish.layer = LayerMask.NameToLayer("Fish");
+                            Fish newFishScript = newFish.GetComponent<Fish>();
+                            newFishScript.InitialEnergy = EnergyToGiveBirth/NumberOfChildren;
+                        }
+                        energy -= EnergyToGiveBirth;
                     }
                     gameObject.layer = LayerMask.NameToLayer("Fish");
                     matingTimer = 0;
@@ -365,6 +381,7 @@ public class Fish : MonoBehaviour
                 Vector3 DirectionToPredators = Vector3.zero;
                 if(hitColliders.Length==0){
                     gameObject.layer = LayerMask.NameToLayer("Fish");
+                    runningTimer = 1f;
                     state = fishState.SettlingDown;
                     break;
                 } 
@@ -377,7 +394,7 @@ public class Fish : MonoBehaviour
                 }
                 Vector3 runAwayDirec = -DirectionToPredators;
                 runAwayDirec = Vector3.Normalize(runAwayDirec);
-                Debug.DrawRay(transform.position,runAwayDirec*minimumDistanceFromPredator, Color.red);
+                Debug.DrawRay(transform.position,runAwayDirec*minimumDistanceFromPredator, Color.blue);
                 mukiForMuki = Vector3.SignedAngle(runAwayDirec,new Vector3(-1,0,0),up);
                 if(Mathf.Abs(mukiForMuki)>90){
                     firstdirection = false;
@@ -391,16 +408,17 @@ public class Fish : MonoBehaviour
                 }
                 
                 transform.Rotate(0,0,muki);
-                // powerDirection = runAwayDirec;
-                powerDirection = RotateZ(forward,muki);
+                powerDirection = runAwayDirec;
+                // powerDirection = RotateZ(forward,muki);
                 rng = Random.Range(0f,1f);
                 if(rng<=Mathf.Exp(-impulseTime/timer)){
-                    if(firstdirection){
-                        fishBody.AddForce(powerDirection*impulseForce,ForceMode.Impulse);
-                    }
-                    else{
-                        fishBody.AddForce(-powerDirection*impulseForce,ForceMode.Impulse);
-                    }
+                    fishBody.AddForce(powerDirection*impulseForce,ForceMode.Impulse);
+                    // if(firstdirection){
+                    //     fishBody.AddForce(powerDirection*impulseForce,ForceMode.Impulse);
+                    // }
+                    // else{
+                    //     fishBody.AddForce(-powerDirection*impulseForce,ForceMode.Impulse);
+                    // }
                     timer = 0;
                     energy -= moveCost;
                 }
@@ -431,7 +449,7 @@ public class Fish : MonoBehaviour
         else critState = CriticalState.None;
     }
     public void CheckForPredator(){
-        if(gameObject.layer != LayerMask.NameToLayer("RunningAwayFish")){
+        if(gameObject.layer != LayerMask.NameToLayer("RunningAwayFish")&&runningTimer<=0f){
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, minimumDistanceFromPredator, (1 << LayerMask.NameToLayer("Predator"))|(1 << LayerMask.NameToLayer("FoundMatePredator"))|(1 << LayerMask.NameToLayer("FoundFoodPredator")));
             if(hitColliders.Length>0){
                 state = fishState.RunAway;
@@ -439,6 +457,7 @@ public class Fish : MonoBehaviour
                 gameObject.layer = LayerMask.NameToLayer("RunningAwayFish");
             } 
         }
+        runningTimer -= Time.deltaTime;
     }
     public void UpdateDataOnDeath(){
         Fish.meanViewRadius = (Fish.meanViewRadius * Fish.FishCount - viewRadius)/(Fish.FishCount-1);
@@ -488,8 +507,8 @@ public class Fish : MonoBehaviour
         if(babyScript.viewRadius<0)babyScript.viewRadius = 0;
 
         rng = Random.Range(0,2);
-        if(rng==0) babyScript.impulseTime = momScript.impulseTime + Random.Range(-0.5f,0.5f);
-        else babyScript.impulseTime = dadScript.impulseTime + Random.Range(-0.5f,0.5f);
+        if(rng==0) babyScript.impulseTime = momScript.impulseTime + Random.Range(-0.1f,0.1f);
+        else babyScript.impulseTime = dadScript.impulseTime + Random.Range(-0.1f,0.1f);
         if(babyScript.impulseTime<0)babyScript.impulseTime = 0;
 
         rng = Random.Range(0,2);
@@ -544,13 +563,28 @@ public class Fish : MonoBehaviour
         if(rng==0) babyScript.minimumDistanceFromPredator =  Mathf.Pow(10,Mathf.Log10(momScript.minimumDistanceFromPredator) + Random.Range(-0.5f,0.5f));
         else babyScript.minimumDistanceFromPredator = Mathf.Pow(10,Mathf.Log10(dadScript.minimumDistanceFromPredator) + Random.Range(-0.5f,0.5f));
         if(babyScript.minimumDistanceFromPredator<0)babyScript.minimumDistanceFromPredator = 0;
+
+        rng = Random.Range(0,2);
+        if(rng==0) babyScript.EnergyToGiveBirth = momScript.EnergyToGiveBirth + Random.Range(-5f,5f);
+        else babyScript.EnergyToGiveBirth = dadScript.EnergyToGiveBirth + Random.Range(-5f,5f);
+        if(babyScript.EnergyToGiveBirth<0)babyScript.EnergyToGiveBirth = 0;
+
+        rng = Random.Range(0,2);
+        if(rng==0) babyScript.NumberOfChildren = momScript.NumberOfChildren + (1 - 2*Random.Range(0,2))*Random.Range(0,11)/10;
+        else babyScript.NumberOfChildren = dadScript.NumberOfChildren + (1 - 2*Random.Range(0,2))*Random.Range(0,11)/10;
+        if(babyScript.NumberOfChildren<1)babyScript.NumberOfChildren = 1;
+
+        rng = Random.Range(0,2);
+        if(rng==0) babyScript.MaxEnergy = momScript.MaxEnergy + Random.Range(-5f,5f);
+        else babyScript.MaxEnergy = dadScript.MaxEnergy + Random.Range(-5f,5f);
+        if(babyScript.MaxEnergy<0)babyScript.MaxEnergy = 0;
     }
 
     float RelativeBenefitCoefficient(float enrg){
-        return ( Mathf.Exp(-enrg*RelativeBenefitParameter) - Mathf.Exp(-100*RelativeBenefitParameter) ) / ( 1-Mathf.Exp(-100*RelativeBenefitParameter) );
+        return ( Mathf.Exp(-enrg*RelativeBenefitParameter) - Mathf.Exp(-MaxEnergy*RelativeBenefitParameter) ) / ( 1-Mathf.Exp(-MaxEnergy*RelativeBenefitParameter) );
     }
     float RelativeCostCoefficient(float enrg){
-        if(( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-100*RelativeCostParameter) ) / ( 1-Mathf.Exp(-100*RelativeCostParameter) )>=0) return ( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-100*RelativeCostParameter) ) / ( 1-Mathf.Exp(-100*RelativeCostParameter) );
+        if(( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-MaxEnergy*RelativeCostParameter) ) / ( 1-Mathf.Exp(-MaxEnergy*RelativeCostParameter) )>=0) return ( Mathf.Exp(-enrg*RelativeCostParameter) - Mathf.Exp(-MaxEnergy*RelativeCostParameter) ) / ( 1-Mathf.Exp(-MaxEnergy*RelativeCostParameter) );
         else return 0f;
         
     }
@@ -585,7 +619,7 @@ public class Fish : MonoBehaviour
     public bool PleaseMate(GameObject male){
         Fish maleScript = male.GetComponent<Fish>();
         float age = (100f-life)/lifeDecreaseRate;
-        if(age>=matingAge&&matingTimer>=matingRestJikan&&gameObject.layer == LayerMask.NameToLayer("Fish")&&critState!=CriticalState.EnergyCritical){
+        if(age>=matingAge&&matingTimer>=matingRestJikan&&gameObject.layer == LayerMask.NameToLayer("Fish")&&critState!=CriticalState.EnergyCritical&&energy>EnergyToGiveBirth + minimunEnergyToMate){
             gameObject.layer =  LayerMask.NameToLayer("FoundMateFish");
             mate = male;
             state = fishState.FoundMate;

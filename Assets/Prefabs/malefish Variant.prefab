@@ -113,7 +113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: valueAsFood
-      value: 30
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3524676304211246738, guid: 14daa8e34e4b2984c9e5a683c6728206, type: 3}
       propertyPath: viewKaizoudo
