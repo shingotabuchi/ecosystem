@@ -35,6 +35,7 @@ public class Fish : MonoBehaviour
     public float life;
     float matingTimer;
     float runningTimer;
+    bool LeftWall,RightWall;
 
     ////さかなの挙動用の定数（共通）    
     public int viewKaizoudo;
@@ -72,7 +73,8 @@ public class Fish : MonoBehaviour
     public static float meanViewRadius,meanImpulseTime,meanKyuukaku,meanSoshakuJikan,
     meanMatingRestJikan,meanMatingAge,meanJumyo,meanPotentialBenefitOfMovement,
     meanMinimumEnergyToMate,meanMinimumLifeToEat,meanRelativeBenefitParameter,meanRelativeCostParameter,
-    meanMinimumDistanceFromPredator;
+    meanMinimumDistanceFromPredator,
+    meanEnergyToGiveBirth,meanNumberOfChildren,meanMaxEnergy,meanInitialEnergy;
     public enum Sex
     {
         Male = 0,
@@ -212,6 +214,14 @@ public class Fish : MonoBehaviour
                 rng = Random.Range(0f,1f);
                 if(rng<=Mathf.Exp(-impulseTime/timer)){
                     int direction = Random.Range(0,2);
+                    if(RightWall){
+                        direction = 0;
+                        RightWall = false;
+                    }
+                    if(LeftWall){
+                        direction = 1;
+                        LeftWall = false;
+                    }
                     // int direction = 0;
                     float force = Random.Range(0f,impulseForce);
                     // float force = impulseForce;
@@ -427,6 +437,10 @@ public class Fish : MonoBehaviour
         }
 
         if(Mathf.Abs(transform.position.x)>ScreenHalfWidth-5*FishWidth||Mathf.Abs(transform.position.y)>ScreenHalfHeight-5*FishHeight){
+            if(Mathf.Abs(transform.position.x)>ScreenHalfWidth-5*FishWidth){
+                if(transform.position.x>0) RightWall = true;
+                else LeftWall = true;
+            }
             transform.position = lastposition;
         }
         else lastposition = transform.position;
@@ -460,6 +474,10 @@ public class Fish : MonoBehaviour
         runningTimer -= Time.deltaTime;
     }
     public void UpdateDataOnDeath(){
+        if(Fish.FishCount==1||Fish.FishCount==0){
+            Fish.FishCount = 0;
+            return;
+        }
         Fish.meanViewRadius = (Fish.meanViewRadius * Fish.FishCount - viewRadius)/(Fish.FishCount-1);
         Fish.meanImpulseTime = (Fish.meanImpulseTime * Fish.FishCount - impulseTime)/(Fish.FishCount-1);
         Fish.meanKyuukaku = (Fish.meanKyuukaku * Fish.FishCount - kyuukaku)/(Fish.FishCount-1);
@@ -473,6 +491,11 @@ public class Fish : MonoBehaviour
         Fish.meanRelativeBenefitParameter = (Fish.meanRelativeBenefitParameter * Fish.FishCount - RelativeBenefitParameter)/(Fish.FishCount-1);
         Fish.meanRelativeCostParameter = (Fish.meanRelativeCostParameter * Fish.FishCount - RelativeCostParameter)/(Fish.FishCount-1);
         Fish.meanMinimumDistanceFromPredator = (Fish.meanMinimumDistanceFromPredator * Fish.FishCount - minimumDistanceFromPredator)/(Fish.FishCount-1);
+
+        Fish.meanEnergyToGiveBirth = (Fish.meanEnergyToGiveBirth * Fish.FishCount - EnergyToGiveBirth)/(Fish.FishCount-1);
+        Fish.meanNumberOfChildren = (Fish.meanNumberOfChildren * Fish.FishCount - NumberOfChildren)/(Fish.FishCount-1);
+        Fish.meanMaxEnergy = (Fish.meanMaxEnergy * Fish.FishCount - MaxEnergy)/(Fish.FishCount-1);
+        Fish.meanInitialEnergy = (Fish.meanInitialEnergy * Fish.FishCount - InitialEnergy)/(Fish.FishCount-1);
         Fish.FishCount--;
         if(sex==Sex.Male) Fish.FishCountMale--;
         else Fish.FishCountFemale--;
@@ -491,6 +514,11 @@ public class Fish : MonoBehaviour
         Fish.meanRelativeBenefitParameter = (Fish.meanRelativeBenefitParameter * Fish.FishCount + RelativeBenefitParameter)/(Fish.FishCount+1);
         Fish.meanRelativeCostParameter = (Fish.meanRelativeCostParameter * Fish.FishCount + RelativeCostParameter)/(Fish.FishCount+1);
         Fish.meanMinimumDistanceFromPredator = (Fish.meanMinimumDistanceFromPredator * Fish.FishCount + minimumDistanceFromPredator)/(Fish.FishCount+1);
+
+        Fish.meanEnergyToGiveBirth = (Fish.meanEnergyToGiveBirth * Fish.FishCount + EnergyToGiveBirth)/(Fish.FishCount+1);
+        Fish.meanNumberOfChildren = (Fish.meanNumberOfChildren * Fish.FishCount + NumberOfChildren)/(Fish.FishCount+1);
+        Fish.meanMaxEnergy = (Fish.meanMaxEnergy * Fish.FishCount + MaxEnergy)/(Fish.FishCount+1);
+        Fish.meanInitialEnergy = (Fish.meanInitialEnergy * Fish.FishCount + InitialEnergy)/(Fish.FishCount+1);
         Fish.FishCount++;
         if(sex==Sex.Male) Fish.FishCountMale++;
         else Fish.FishCountFemale++;

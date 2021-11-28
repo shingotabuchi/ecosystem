@@ -111,8 +111,8 @@ MonoBehaviour:
   impulseAngle: 30
   impulseForce: 3
   rotateSpeed: 40
-  moveCost: 1
-  stillCost: 0.02
+  moveCost: 1.3
+  stillCost: 0.03
   matingJikan: 5
   eatRange: 0.8
   oneStepMoveRange: 1.5

@@ -20,7 +20,7 @@ public class PredatorSpawner : MonoBehaviour
             GameObject newPredator = Instantiate(malePredatorPrefab,spawnPosition,Quaternion.Euler(0,0,90));
             Predator newPredatorScript = newPredator.GetComponent<Predator>();
             newPredatorScript.viewRadius = Random.Range(4f,6f);
-            newPredatorScript.impulseTime = Random.Range(2.5f,6.5f);
+            newPredatorScript.impulseTime = Random.Range(2f,5f);
             newPredatorScript.soshakuJikan = Random.Range(1f,10f);
             newPredatorScript.matingRestJikan = Random.Range(1f,14f);
             newPredatorScript.matingAge = Random.Range(10f,50f);
@@ -41,7 +41,7 @@ public class PredatorSpawner : MonoBehaviour
             GameObject newPredator = Instantiate(femalePredatorPrefab,spawnPosition,Quaternion.Euler(0,0,90));
             Predator newPredatorScript = newPredator.GetComponent<Predator>();
             newPredatorScript.viewRadius = Random.Range(4f,6f);
-            newPredatorScript.impulseTime = Random.Range(2.5f,6.5f);
+            newPredatorScript.impulseTime = Random.Range(2f,5f);
             newPredatorScript.soshakuJikan = Random.Range(1f,10f);
             newPredatorScript.matingRestJikan = Random.Range(1f,14f);
             newPredatorScript.matingAge = Random.Range(10f,50f);

@@ -69,7 +69,8 @@ public class Predator : MonoBehaviour
     public static int FishCount,FishCountMale,FishCountFemale;
     public static float meanViewRadius,meanImpulseTime,meanSoshakuJikan,
     meanMatingRestJikan,meanMatingAge,meanJumyo,meanPotentialBenefitOfMovement,
-    meanMinimumEnergyToMate,meanMinimumLifeToEat,meanRelativeBenefitParameter,meanRelativeCostParameter;
+    meanMinimumEnergyToMate,meanMinimumLifeToEat,meanRelativeBenefitParameter,meanRelativeCostParameter,
+    meanEnergyToGiveBirth,meanNumberOfChildren,meanMaxEnergy,meanInitialEnergy;
     public enum Sex
     {
         Male = 0,
@@ -395,6 +396,11 @@ public class Predator : MonoBehaviour
         Predator.meanMinimumLifeToEat = (Predator.meanMinimumLifeToEat * Predator.FishCount - minimunLifeToEat)/(Predator.FishCount-1);
         Predator.meanRelativeBenefitParameter = (Predator.meanRelativeBenefitParameter * Predator.FishCount - RelativeBenefitParameter)/(Predator.FishCount-1);
         Predator.meanRelativeCostParameter = (Predator.meanRelativeCostParameter * Predator.FishCount - RelativeCostParameter)/(Predator.FishCount-1);
+
+        Predator.meanEnergyToGiveBirth = (Predator.meanEnergyToGiveBirth * Predator.FishCount - EnergyToGiveBirth)/(Predator.FishCount-1);
+        Predator.meanNumberOfChildren = (Predator.meanNumberOfChildren * Predator.FishCount - NumberOfChildren)/(Predator.FishCount-1);
+        Predator.meanMaxEnergy = (Predator.meanMaxEnergy * Predator.FishCount - MaxEnergy)/(Predator.FishCount-1);
+        Predator.meanInitialEnergy = (Predator.meanInitialEnergy * Predator.FishCount - InitialEnergy)/(Predator.FishCount-1);
         Predator.FishCount--;
         if(sex==Sex.Male) Predator.FishCountMale--;
         else Predator.FishCountFemale--;
@@ -411,6 +417,11 @@ public class Predator : MonoBehaviour
         Predator.meanMinimumLifeToEat = (Predator.meanMinimumLifeToEat * Predator.FishCount + minimunLifeToEat)/(Predator.FishCount+1);
         Predator.meanRelativeBenefitParameter = (Predator.meanRelativeBenefitParameter * Predator.FishCount + RelativeBenefitParameter)/(Predator.FishCount+1);
         Predator.meanRelativeCostParameter = (Predator.meanRelativeCostParameter * Predator.FishCount + RelativeCostParameter)/(Predator.FishCount+1);
+
+        Predator.meanEnergyToGiveBirth = (Predator.meanEnergyToGiveBirth * Predator.FishCount + EnergyToGiveBirth)/(Predator.FishCount+1);
+        Predator.meanNumberOfChildren = (Predator.meanNumberOfChildren * Predator.FishCount + NumberOfChildren)/(Predator.FishCount+1);
+        Predator.meanMaxEnergy = (Predator.meanMaxEnergy * Predator.FishCount + MaxEnergy)/(Predator.FishCount+1);
+        Predator.meanInitialEnergy = (Predator.meanInitialEnergy * Predator.FishCount + InitialEnergy)/(Predator.FishCount+1);
         Predator.FishCount++;
         if(sex==Sex.Male) Predator.FishCountMale++;
         else Predator.FishCountFemale++;

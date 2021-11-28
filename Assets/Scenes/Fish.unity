@@ -549,7 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc949c8fdba1914ab802f9c29097c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PredatorToSpawn: 6
+  PredatorToSpawn: 15
   malePredatorPrefab: {fileID: 1962342833014818230, guid: 3f4a39a68b949df4a93c6c5503931c2d, type: 3}
   femalePredatorPrefab: {fileID: 4767315882080144840, guid: 7b5a74cb9ba56aa438eba3d8656bbb53, type: 3}
   Map: {fileID: 116642280}
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad1c6efab2e76b49854bc1149d7c14d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishToSpawn: 500
+  fishToSpawn: 300
   maleFishPrefab: {fileID: 6604994604197646144, guid: 436315c610b5d6a449d1f5d7731d9d58, type: 3}
   femaleFishPrefab: {fileID: 4219329589295852756, guid: 489d1e72cb5f04f45b19d9c724836407, type: 3}
   Map: {fileID: 116642280}

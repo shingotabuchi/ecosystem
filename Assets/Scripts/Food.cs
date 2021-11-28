@@ -11,6 +11,7 @@ public class Food : MonoBehaviour
     float time;
     float D;
     float ScreenHalfHeight,ScreenHalfWidth;
+    int frameCount = 0; 
     // Start is called before the first frame update
     void Start()
     {
@@ -24,15 +25,19 @@ public class Food : MonoBehaviour
     void Update()
     {
         radius = 3*Mathf.Sqrt(2*D*time);
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius, 1 << LayerMask.NameToLayer("Fish"));
-        foreach (var hitCollider in hitColliders)
-        {
-            Fish fishScript = hitCollider.transform.gameObject.GetComponent<Fish>();
-            Vector3 toFish = hitCollider.transform.position-transform.position;
-            float dist = toFish.magnitude;
-            float scent = kikaku*Mathf.Exp(-dist*dist/(4f*D*time))/Mathf.Sqrt(4f*Mathf.PI*D*time);
-            fishScript.SenseFood(gameObject, scent, value);
+        if(frameCount==100){
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius, 1 << LayerMask.NameToLayer("Fish"));
+            foreach (var hitCollider in hitColliders)
+            {
+                Fish fishScript = hitCollider.transform.gameObject.GetComponent<Fish>();
+                Vector3 toFish = hitCollider.transform.position-transform.position;
+                float dist = toFish.magnitude;
+                float scent = kikaku*Mathf.Exp(-dist*dist/(4f*D*time))/Mathf.Sqrt(4f*Mathf.PI*D*time);
+                fishScript.SenseFood(gameObject, scent, value);
+            }
+            frameCount = 0;
         }
+        else frameCount++;
         time += Time.deltaTime;
         if(time > 2*KakusanJikan){
             Destroy(gameObject);
